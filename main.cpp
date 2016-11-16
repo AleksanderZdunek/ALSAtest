@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <alsa/asoundlib.h>
+#include <iostream>
 
 int main(int argc, char* argv[])
 {
@@ -21,8 +22,12 @@ int main(int argc, char* argv[])
 	//plughw seems to be akin to WASAPI shared mode, hw to exclusive mode 
 	char *pcm_name;
 	//Init pcm_name. Do i want to make this configurable?
-	pcm_name = strdup("plughw:0,0");
-
+	//pcm_name = strdup("plughw:0,0");
+	pcm_name = strdup("default");
+	if(1<argc)
+	{
+		pcm_name = argv[1];
+	}
 	//Allocate the snd_pcm_hw_params_t struct on the stack.
 	snd_pcm_hw_params_alloca(&hwparams);
 
@@ -52,7 +57,7 @@ int main(int argc, char* argv[])
 	int periods = 2; //Number of periods
 	snd_pcm_uframes_t periodsize = 8129; //Periodsize (bytes)
 
-										 //Set access type.
+	//Set access type.
 	if (0 > snd_pcm_hw_params_set_access(pcm_handle, hwparams, SND_PCM_ACCESS_RW_INTERLEAVED))
 	{
 		fprintf(stderr, "Error setting acess.\n");
@@ -85,8 +90,28 @@ int main(int argc, char* argv[])
 		return(-1);
 	}
 
+	unsigned int tmp_val;
+	int tmp_dir;
+	//Get periods from hwparams configuration space
+	if (0 > snd_pcm_hw_params_get_periods_min(hwparams, &tmp_val, &tmp_dir) )
+	{
+		std::cout << "Configuration space does not contain a single periods value" << std::endl;
+	}else
+	{
+		std::cout << "Configuration space get min periods\n";
+		std::cout << "tmp_val: " << tmp_val << " tmp_dir: " << tmp_dir << std::endl;
+	}
+	if (0 > snd_pcm_hw_params_get_periods_max(hwparams, &tmp_val, &tmp_dir) )
+	{
+		std::cout << "Configuration space does not contain a single periods value" << std::endl;
+	}else
+	{
+		std::cout << "Configuration space get max periods\n";
+		std::cout << "tmp_val: " << tmp_val << " tmp_dir: " << tmp_dir << std::endl;
+	}
+
 	//Set number of periods.
-	if (0 > snd_pcm_hw_params_set_periods(pcm_handle, hwparams, periods, 0))
+	if (0 > snd_pcm_hw_params_set_periods(pcm_handle, hwparams, 2, 0))
 	{
 		fprintf(stderr, "Error setting periods.\n");
 		return(-1);
@@ -116,7 +141,7 @@ int main(int argc, char* argv[])
 
 	data = (unsigned char*)malloc(periodsize);
 	frames = periodsize >> 2;
-	for (l1 = 0; l1 < 100; l1++)
+	for (l1 = 0; l1 < 100;)
 	{
 		for (l2 = 0; l2 < frames; l2++)
 		{
