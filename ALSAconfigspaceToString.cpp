@@ -47,7 +47,7 @@ std::string configspace2string(snd_pcm_hw_params_t* conf)
 
 	snd_pcm_subformat_t tmpSubFormat;
 	snd_pcm_hw_params_get_subformat(conf, &tmpSubFormat) >> OnError("get_subformat error");
-	oss << "subformat: " << tmpFormat << std::endl;
+	oss << "subformat: " << tmpSubFormat << std::endl;
 
 	snd_pcm_subformat_mask_t* ptmpSubFormatMask;
 	snd_pcm_subformat_mask_alloca(&ptmpSubFormatMask);
