@@ -1,0 +1,96 @@
+ALSA configspace explorer!
+Device name: plug:default
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+hwparams any config space
+
+Access
+get_access error
+access: 1024
+acces mask: TODO!
+
+Format
+get_format error
+format: 4
+format mask: TODO!
+subformat: 4
+subformat mask: TODO!
+
+Channels
+get_channels error
+channels: 32
+channels min: 1
+channels max: 10000
+
+SampleRate
+get_rate error
+Samplerate: 10000 dir: 4
+Samplerate min: 4000 dir: 0
+Samplerate max: 4294967295 dir: -1
+get_rate_numden error
+Samplerate fractional: 4000/192000
+
+Period
+get_period_time error
+Period time: 4294967295 dir: -1
+Period time min: 5 dir: 1
+Period time max: 349525500 dir: -1
+get_period_size error
+Period frames: 549755813890 dir: -1
+Period frames min: 0 dir: 1
+Period frames max: 4294967295 dir: -1
+get_periods error
+Periods count: 349525500 dir: -1
+Periods count min: 0 dir: 1
+Periods count max: 4294967295 dir: 0
+
+Buffer
+get_buffer_time error
+Buffer time: 4294967295 dir: 0
+Buffer time min: 1 dir: 0
+Buffer time max: 4294967295 dir: 0
+get_buffer_size error
+Buffer frames: 4294967295
+Buffer frames min: 1
+Buffer frames max: 4294967294
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+hwparams single config
+
+Access
+access: 0
+acces mask: TODO!
+
+Format
+format: 0
+format mask: TODO!
+subformat: 0
+subformat mask: TODO!
+
+Channels
+channels: 1
+channels min: 1
+channels max: 1
+
+SampleRate
+Samplerate: 4000 dir: 0
+Samplerate min: 4000 dir: 0
+Samplerate max: 4000 dir: 0
+Samplerate fractional: 4000/1
+
+Period
+Period time: 1024000 dir: 0
+Period time min: 1024000 dir: 0
+Period time max: 1024000 dir: 0
+Period frames: 4096 dir: 0
+Period frames min: 4096 dir: 0
+Period frames max: 4096 dir: 0
+Periods count: 1024 dir: 0
+Periods count min: 1024 dir: 0
+Periods count max: 1024 dir: 0
+
+Buffer
+Buffer time: 1048576000 dir: 0
+Buffer time min: 1048576000 dir: 0
+Buffer time max: 1048576000 dir: 0
+Buffer frames: 4194304
+Buffer frames min: 4194304
+Buffer frames max: 4194304

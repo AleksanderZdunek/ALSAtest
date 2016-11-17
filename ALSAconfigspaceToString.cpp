@@ -5,9 +5,9 @@
 std::ostringstream* p_oss = nullptr; //Not thread safe. Doesn't matter for my use case.
 struct errStruct
 {
-	char* msg;
+	const char* msg;
 };
-errStruct OnError(char* msg)
+errStruct OnError(const char* msg)
 {
 	return errStruct{ msg };
 }
@@ -30,26 +30,29 @@ std::string configspace2string(snd_pcm_hw_params_t* conf)
 	snd_pcm_hw_params_get_access(conf, &tmpAccess) >> OnError("get_access error");
 	oss << "access: " << tmpAccess << std::endl;
 
-	snd_pcm_access_mask_t tmpAccessMask;
-	snd_pcm_hw_params_get_access_mask(conf, &tmpAccessMask) >> OnError("get_access_mask error");
-	oss << "acces mask: " << "TODO!"<< std::endl;// << tmpAccessMask << std::endl;
+	snd_pcm_access_mask_t* ptmpAccessMask;
+	snd_pcm_access_mask_alloca(&ptmpAccessMask);
+	snd_pcm_hw_params_get_access_mask(conf, ptmpAccessMask) >> OnError("get_access_mask error");
+	oss << "acces mask: " << "TODO!"<< std::endl;
 
 	oss << std::endl << "Format" << std::endl;
 	snd_pcm_format_t tmpFormat;
 	snd_pcm_hw_params_get_format(conf, &tmpFormat) >> OnError("get_format error");
 	oss << "format: " << tmpFormat << std::endl;
 
-	snd_pcm_format_mask_t tmpFormatMask;
-	snd_pcm_hw_params_get_format_mask(conf, &tmpFormatMask) >> OnError("get_format_mask error");
+	snd_pcm_format_mask_t* ptmpFormatMask;
+	snd_pcm_format_mask_alloca(&ptmpFormatMask);
+	snd_pcm_hw_params_get_format_mask(conf, ptmpFormatMask);// >> OnError("get_format_mask error");
 	oss << "format mask: " << "TODO!" << std::endl;
 
 	snd_pcm_subformat_t tmpSubFormat;
 	snd_pcm_hw_params_get_subformat(conf, &tmpSubFormat) >> OnError("get_subformat error");
-	oss << "format: " << tmpFormat << std::endl;
+	oss << "subformat: " << tmpFormat << std::endl;
 
-	snd_pcm_subformat_mask_t tmpSubFormatMask;
-	snd_pcm_hw_params_get_subformat_mask(conf, &tmpSubFormatMask) >> OnError("get_subformat_mask error");
-	oss << "format mask: " << "TODO!" << std::endl;
+	snd_pcm_subformat_mask_t* ptmpSubFormatMask;
+	snd_pcm_subformat_mask_alloca(&ptmpSubFormatMask);
+	snd_pcm_hw_params_get_subformat_mask(conf, ptmpSubFormatMask);// >> OnError("get_subformat_mask error");
+	oss << "subformat mask: " << "TODO!" << std::endl;
 
 	oss << std::endl << "Channels" << std::endl;
 	unsigned int tmpVal;
@@ -76,7 +79,6 @@ std::string configspace2string(snd_pcm_hw_params_t* conf)
 	unsigned int tmpNumerator, tmpDenominator;
 	snd_pcm_hw_params_get_rate_numden(conf, &tmpNumerator, &tmpDenominator) >> OnError("get_rate_numden error");
 	oss << "Samplerate fractional: " << tmpNumerator << "/" << tmpDenominator << std::endl;
-	oss << "Samplerate: " << tmpVal << " dir: " << tmpDir << std::endl;
 
 	oss << std::endl << "Period" << std::endl;
 	snd_pcm_hw_params_get_period_time(conf, &tmpVal, &tmpDir) >> OnError("get_period_time error");

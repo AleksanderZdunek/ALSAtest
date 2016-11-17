@@ -16,6 +16,8 @@ int main(int argc, char* argv[])
 	if (1 < argc) deviceName = argv[1];
 	snd_pcm_hw_params_alloca(&hwparams);
 
+	std::cout << "Device name: " << deviceName << std::endl;
+
 	if (0 > snd_pcm_open(&device, deviceName, SND_PCM_STREAM_PLAYBACK, BLOCKING_MODE))
 	{
 		fprintf(stderr, "Error opening PCM device %s\n", deviceName);

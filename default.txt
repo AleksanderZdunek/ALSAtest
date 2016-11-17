@@ -1,0 +1,95 @@
+ALSA configspace explorer!
+Device name: default
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+hwparams any config space
+
+Access
+access: 3
+acces mask: TODO!
+
+Format
+get_format error
+format: -561983104
+format mask: TODO!
+subformat: -561983104
+subformat mask: TODO!
+
+Channels
+get_channels error
+channels: 5
+channels min: 1
+channels max: 32
+
+SampleRate
+get_rate error
+Samplerate: 32 dir: 32690
+Samplerate min: 1 dir: 0
+Samplerate max: 192000 dir: 0
+get_rate_numden error
+Samplerate fractional: 0/0
+
+Period
+get_period_time error
+Period time: 192000 dir: 0
+Period time min: 5 dir: 1
+Period time max: 4294967295 dir: -1
+get_period_size error
+Period frames: 3 dir: -1
+Period frames min: 1 dir: 0
+Period frames max: 1398102 dir: -1
+get_periods error
+Periods count: 4294967295 dir: -1
+Periods count min: 3 dir: 0
+Periods count max: 1024 dir: 0
+
+Buffer
+get_buffer_time error
+Buffer time: 1024 dir: 0
+Buffer time min: 15 dir: 1
+Buffer time max: 4294967295 dir: 0
+get_buffer_size error
+Buffer frames: 1398102
+Buffer frames min: 3
+Buffer frames max: 4194304
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+hwparams single config
+
+Access
+access: 3
+acces mask: TODO!
+
+Format
+format: 1
+format mask: TODO!
+subformat: 1
+subformat mask: TODO!
+
+Channels
+channels: 1
+channels min: 1
+channels max: 1
+
+SampleRate
+Samplerate: 1 dir: 0
+Samplerate min: 1 dir: 0
+Samplerate max: 1 dir: 0
+Samplerate fractional: 1/1
+
+Period
+Period time: 130000000 dir: 1
+Period time min: 130000000 dir: 1
+Period time max: 130000001 dir: -1
+Period frames: 130 dir: 1
+Period frames min: 130 dir: 1
+Period frames max: 131 dir: -1
+Periods count: 33 dir: 0
+Periods count min: 33 dir: 0
+Periods count max: 33 dir: 0
+
+Buffer
+Buffer time: 4294000000 dir: 0
+Buffer time min: 4294000000 dir: 0
+Buffer time max: 4294000000 dir: 0
+Buffer frames: 4294
+Buffer frames min: 4294
+Buffer frames max: 4294
