@@ -3,10 +3,12 @@
 #include <cstdio>
 #include <cstdlib>
 #include <alsa/asoundlib.h>
+#include "ALSAconfigspaceToString.h"
 #include <iostream>
 
-int xmain(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
+	char defaultName[]{"plughw:1,0"};
 	//Handle for the PCM device
 	snd_pcm_t* pcm_handle;
 
@@ -20,7 +22,7 @@ int xmain(int argc, char* argv[])
 	/* The first number is the number of the soundcard, */
 	/* the second number is the number of the device.   */
 	//plughw seems to be akin to WASAPI shared mode, hw to exclusive mode 
-	char *pcm_name;
+	char *pcm_name = defaultName;
 	//Init pcm_name. Do i want to make this configurable?
 	//pcm_name = strdup("plughw:0,0");
 	//pcm_name = strdup("default");
@@ -90,26 +92,6 @@ int xmain(int argc, char* argv[])
 		return(-1);
 	}
 
-	unsigned int tmp_val;
-	int tmp_dir;
-	//Get periods from hwparams configuration space
-	if (0 > snd_pcm_hw_params_get_periods_min(hwparams, &tmp_val, &tmp_dir) )
-	{
-		std::cout << "Configuration space does not contain a single periods value" << std::endl;
-	}else
-	{
-		std::cout << "Configuration space get min periods\n";
-		std::cout << "tmp_val: " << tmp_val << " tmp_dir: " << tmp_dir << std::endl;
-	}
-	if (0 > snd_pcm_hw_params_get_periods_max(hwparams, &tmp_val, &tmp_dir) )
-	{
-		std::cout << "Configuration space does not contain a single periods value" << std::endl;
-	}else
-	{
-		std::cout << "Configuration space get max periods\n";
-		std::cout << "tmp_val: " << tmp_val << " tmp_dir: " << tmp_dir << std::endl;
-	}
-
 	//Set number of periods.
 	if (0 > snd_pcm_hw_params_set_periods(pcm_handle, hwparams, 2, 0))
 	{
@@ -130,6 +112,8 @@ int xmain(int argc, char* argv[])
 		fprintf(stderr, "Error setting HW params.\n");
 		return(-1);
 	}
+
+	std::cout << configspace2string(hwparams);
 
 	//Write num_frames frames from buffer data to the PCM device pointed to by pcm_handle. Returns the number of frames actually written.
 	//snd_pcm_sframes_t snd_pcm_writei(pcm_handle, data, num_frames);
