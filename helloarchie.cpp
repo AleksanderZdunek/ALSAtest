@@ -5,11 +5,19 @@
 
 const float twoPI = (float)atan(1)*8;
 const float toneFrequency = 261.626f;
-const UINT32 sampleRate = 48000; //This should be configurable, really.
-const int channels = 2;	//This should be configurable, really.
-const int sampleSize = 4; //bytes. //Because IEEE_FLOAT //This should be configurable, really.
-const int frameSize = channels*sampleSize;
+UINT32 sampleRate(0); //This should be configurable, really.
+int channels(0);	//This should be configurable, really.
+int sampleSize(0); //bytes. //Because IEEE_FLOAT //This should be configurable, really.
+int frameSize(0);
 const float phaseDelta = toneFrequency * twoPI / sampleRate;
+
+void GetConfigValues()
+{
+	sampleRate = Archie::configFormat.Format.nSamplesPerSec;
+	channels = Archie::configFormat.Format.nChannels;
+	sampleSize = Archie::configFormat.Format.wBitsPerSample;
+	frameSize = channels*sampleSize;
+}
 
 DWORD Tone(UINT32 bufferSize, BYTE* pBuffer)
 {
@@ -34,6 +42,7 @@ int main(int argc, char* argv[])
 	std::cout << "A tinnitus simulator is the Hello World of audio programming." << std::endl;
 
 	Archie::Init();
+	GetConfigValues();
 	Archie::LoadData = Tone;
 	Archie::Play();
 	Archie::UnInit(); //This will never be reached, because the program does not handle user input to terminate gracefully.
