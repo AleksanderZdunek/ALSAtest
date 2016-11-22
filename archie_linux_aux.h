@@ -13,6 +13,14 @@ enum _AUDCLNT_BUFFERFLAGS
 	AUDCLNT_BUFFERFLAGS_SILENT = 0x2
 };
 
+enum _WAVE_FORMAT_TAGS
+{
+	WAVE_FORMAT_UNKNOWN		= 0x0000,
+	WAVE_FORMAT_PCM			= 0x0001,
+	WAVE_FORMAT_IEEE_FLOAT	= 0x0003,
+	WAVE_FORMAT_EXTENSIBLE	= 0xFFFE
+};
+
 struct GUID
 {
 	unsigned long Data1;
@@ -20,6 +28,9 @@ struct GUID
 	unsigned short Data3;
 	unsigned char Data4[8];
 };
+
+const GUID KSDATAFORMAT_SUBTYPE_PCM { 0x1, 0, 0x10,{ 0x80, 0, 0, 0xaa, 0, 0x38, 0x9b, 0x71 } };
+const GUID KSDATAFORMAT_SUBTYPE_IEEE_FLOAT{ 0x3, 0, 0x10,{ 0x80, 0, 0, 0xaa, 0, 0x38, 0x9b, 0x71 } };
 
 struct WAVEFORMATEX
 {

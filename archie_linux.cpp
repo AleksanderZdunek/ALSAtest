@@ -15,7 +15,7 @@ const char defaultDeviceName[]{"default"};
 snd_pcm_t* device = nullptr;
 snd_pcm_hw_params_t* hwConfig = nullptr;
 
-WAVEFORMATEXTENSIBLE configFormat{0};
+WAVEFORMATEXTENSIBLE configFormat{DefaultConfig()};
 std::function<DWORD(UINT32, BYTE*)> LoadData = [](UINT32, BYTE*){return AUDCLNT_BUFFERFLAGS_SILENT;};
 
 void CleanUp()
@@ -40,6 +40,27 @@ inline int operator>>(int errorcode, throwOnError_struct s)
 		CleanUp();
 		throw std::runtime_error("Archie: " + std::string(s.message) + "\nErrorcode: " + std::to_string(errorcode));
 	}
+}
+
+WAVEFORMATEXTENSIBLE DefaultConfig()
+{
+	WAVEFORMATEXTENSIBLE r;
+
+	r.Format.wFormatTag = WAVE_FORMAT_EXTENSIBLE;
+	r.Format.nChannels = 2;
+	r.Format.nSamplesPerSec = 48000;
+	r.Format.nAvgBytesPerSec = 0; //placeholder value
+	r.Format.nBlockAlign = 0; //placeholder value
+	r.Format.wBitsPerSample = 32;
+	r.Format.cbSize = 22;
+	r.Samples.wValidBitsPerSample = r.Format.wBitsPerSample;
+	r.dwChannelMask = 0x3;
+	r.SubFormat = KSDATAFORMAT_SUBTYPE_IEEE_FLOAT;
+	
+	r.Format.nBlockAlign = r.Format.nChannels * (r.Format.wBitsPerSample/8);
+	r.Format.nAvgBytesPerSec = r.Format.nAvgBytesPerSec * (r.Format.wBitsPerSample/8);
+	
+	return r;
 }
 
 void SetConfig()
