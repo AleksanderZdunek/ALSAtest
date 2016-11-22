@@ -2,6 +2,7 @@
 #ifndef ARCHIE_LINUX_AUX_H
 #define ARCHIE_LINUX_AUX_H
 #include <cstdint>
+#include <cstring>
 
 typedef uint16_t WORD;
 typedef uint32_t DWORD;
@@ -55,5 +56,24 @@ struct WAVEFORMATEXTENSIBLE
 	DWORD dwChannelMask;
 	GUID SubFormat;
 };
+
+bool operator!=(const WAVEFORMATEX& l, const WAVEFORMATEX& r);
+bool operator==(const WAVEFORMATEX& l, const WAVEFORMATEX& r);
+bool operator!=(const WAVEFORMATEXTENSIBLE& l, const WAVEFORMATEXTENSIBLE& r);
+bool operator==(const WAVEFORMATEXTENSIBLE& l, const WAVEFORMATEXTENSIBLE& r);
+bool operator!=(const GUID& l, const GUID& r);
+bool operator==(const GUID& l, const GUID& r);
+
+/**
+	If subFormat argument is KSDATAFORMAT_SUBTYPE_IEEE_FLOAT, assumes the value of sampleSize is 4.
+
+	@param channels Number of channels
+	@param sampleRate Samples per second
+	@param sampleSize Size of a sample, in bytes
+	@param subFormat Sample encoding format
+
+	@return Configured WAVEFORMATEXTENSIBLE object
+*/
+WAVEFORMATEXTENSIBLE SetWaveformatextensible(WORD channels, DWORD sampleRate, WORD sampleSize, const GUID subFormat);
 
 #endif // !ARCHIE_LINUX_AUX_H
