@@ -41,11 +41,18 @@ int main(int argc, char* argv[])
 	std::cout << "Hello Archie!" << std::endl;
 	std::cout << "A tinnitus simulator is the Hello World of audio programming." << std::endl;
 
-	Archie::Init();
-	GetConfigValues();
-	Archie::LoadData = Tone;
-	Archie::Play();
-	Archie::UnInit(); //This will never be reached, because the program does not handle user input to terminate gracefully.
+	try
+	{
+		Archie::Init();
+		GetConfigValues();
+		Archie::LoadData = Tone;
+		Archie::Play();
+		Archie::UnInit(); //This will never be reached, because the program does not handle user input to terminate gracefully.
+	}
+	catch (std::runtime_error e)
+	{
+		std::cout << "Runtime error. what: " << e.what() << std::endl;
+	}
 
 	return 0;
 }
